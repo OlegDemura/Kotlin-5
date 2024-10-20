@@ -5,15 +5,23 @@ abstract class VazPlatform(override val color: String) : Car {
     protected var wheelAngle: Int = 0 // Положение руля
 
     // Реализация интерфейса CarInput
-    override fun wheelToRight(degrees: Int) { wheelAngle += degrees }
+    override fun wheelToRight(degrees: Int) {
+        wheelAngle += degrees
+    }
+
     // Реализация интерфейса CarInput
-    override fun wheelToLeft(degrees: Int) { wheelAngle -= degrees }
+    override fun wheelToLeft(degrees: Int) {
+        wheelAngle -= degrees
+    }
 
     // Получить оборудование
     override fun getEquipment(): String = "Кузов, колеса, движок"
 
     // Абстрактное свойство двигателя
     abstract val engine: VazEngine
+
+    abstract override val tank: Tank
+
 }
 
 // Перечисление двигателей ВАЗ
@@ -23,4 +31,41 @@ sealed class VazEngine {
 
     data class LADA_2107(override val volume: Int) : VazEngine()
     data class SAMARA_2108(override val volume: Int) : VazEngine()
+}
+
+/**
+ * Реализция бака
+ * */
+sealed class VasTank : Tank {
+
+    /**
+     * Уровень горючего
+     * */
+    private var fuelLevel: Int = 0
+        set(value) {
+            if (value <= 30) {
+                field = value
+            } else {
+                field = 30
+                println("Бак под завязку")
+            }
+        }
+
+    override fun getContents(): Int {
+        return fuelLevel
+    }
+
+    override fun receiveFuel(litres: Int) {
+        tankMouth.open()
+        this.fuelLevel = litres
+        tankMouth.close()
+    }
+
+    override fun toString(): String {
+        return "${tankMouth.javaClass} (fuelLevel=$fuelLevel)"
+    }
+
+    data class Petrol(override val tankMouth: TankMouth) : VasTank()
+    data class Lpg(override val tankMouth: TankMouth) : VasTank()
+
 }

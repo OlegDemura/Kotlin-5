@@ -11,6 +11,8 @@ object Taz: Car {
      * Цвет машины
      */
     override val color: String = "Ржавый"
+    override val tank: Tank
+        get() = throw NotImplementedError("Нельзя заправить. Машина взорвалась!!!")
 
     /**
      * Следит за машиной

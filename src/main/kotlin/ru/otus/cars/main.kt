@@ -16,6 +16,8 @@ fun main() {
     techChecks()
     println("\n===> Taz...")
     println(Taz.color)
+    println("\n===> refuel car...")
+    refuelCar()
 }
 
 fun driveCars() {
@@ -90,4 +92,19 @@ fun repairEngine(car: VazPlatform) {
         is VazEngine.LADA_2107 -> println("Чистка карбюратора у двигателя объемом ${car.engine.volume} куб.см у машины $car")
         is VazEngine.SAMARA_2108 -> println("Угол зажигания у двигателя объемом ${car.engine.volume} куб.см у машины $car")
     }
+}
+
+fun refuelCar(){
+    val vaz1 = Togliatti.buildCar(Vaz2107, Car.Plates("123", 77))
+    val vaz2 = Togliatti.buildCar(Vaz2108, Car.Plates("321", 78))
+
+    println("Содержимое бака ${vaz1.javaClass.simpleName} = ${vaz1.carOutput.getFuelContents()}")
+    GasStation.refuelCar(vaz1, 20)
+    println("Содержимое бака ${vaz1.javaClass.simpleName} после заправки = ${vaz1.carOutput.getFuelContents()}")
+    println()
+    println("Содержимое бака ${vaz2.javaClass.simpleName} = ${vaz2.carOutput.getFuelContents()}")
+    GasStation.refuelCar(vaz2,47)
+    println("Содержимое бака ${vaz2.javaClass.simpleName} после заправки = ${vaz2.carOutput.getFuelContents()}")
+    println()
+    GasStation.refuelCar(Taz, 1500)
 }

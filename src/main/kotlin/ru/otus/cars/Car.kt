@@ -15,6 +15,11 @@ interface Car : CarInput {
     val color: String
 
     /**
+     * Бак
+     * */
+    val tank: Tank
+
+    /**
      * Следит за машиной
      */
     val carOutput: CarOutput
